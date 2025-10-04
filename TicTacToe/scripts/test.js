@@ -1,7 +1,8 @@
-const GameField = document.getElementsByClassName('cell');
+const GameField = document.getElementsByClassName('gameField');
+const ButtonRestart = document.getElementsByClassName('restart');
+
 let playerOneScore = document.getElementsByClassName('playerScore1');
 let playerTwoScore = document.getElementsByClassName('playerScore2');
-const ButtonRestart = document.getElementsByClassName('restart');
 let winCombination = [
     [0, 1, 2],
     [3, 4, 5],
@@ -23,6 +24,24 @@ function checkWin(i, flag) {
 }
 
 
+function handleClick() {
+    if (flag && GameField[i].innerHTML != 'O') {
+        GameField[i].innerHTML = 'X';
+        flag = false;
+    }
+    else if (GameField[i].innerHTML != 'X') {
+        GameField[i].innerHTML = 'O';
+        flag = true;
+    }
+
+    if (checkWin(i, flag))
+        if (flag)
+            alert('win player 2');
+        else
+            alert('win player 1');
+}
+
+
 function main() {
     // Добавить ввод имен игроков и отображение их в html документе
     // Сделать счетчик побед игроков
@@ -30,23 +49,7 @@ function main() {
 
     let flag = true;  // X - false, O - true
     for (let i = 0; i < GameField.length; i++) {
-        GameField[i].addEventListener('click', () => {
-            if (flag && GameField[i].innerHTML != 'O') {
-                GameField[i].innerHTML = 'X';
-                flag = false;
-            }
-            else if (GameField[i].innerHTML != 'X') {
-                GameField[i].innerHTML = 'O';
-                flag = true;
-            }
-
-            if (checkWin(i, flag))
-                if (flag) {
-                    alert('win player 2');
-                }
-                else
-                    alert('win player 1');
-        });
+        GameField[i].addEventListener('click', handleClick);
     }
 }
 
